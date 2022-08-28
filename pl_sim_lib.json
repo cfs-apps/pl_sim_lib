@@ -1,0 +1,28 @@
+{ "app": {
+   
+   "title": "PL_SIM_LIB",
+   "version": "0.9.0",
+   "owner": "OpenSatkit",
+   "url": "https://github.com/OpenSatKit-Apps/pl_sim_lib",
+
+   "description": [
+      "Payload Simulator library used by pl_mgr and pl_sim apps"
+   ],
+
+   "cfs": {
+      "cfe-type": "CFE_LIB",
+      "obj-file": "pl_sim_lib",
+      "entry-symbol": "PL_SIM_LibInit",
+      "name": "PL_SIM_LIB",
+      "priority": 0,
+      "stack": 0,
+      "load_addr": 0,
+      "exception-action": 0,
+      "app-framework": "osk",
+      "tables": [],
+      "cmd-mid": ""
+   }
+   
+}}
+
+
