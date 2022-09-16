@@ -46,7 +46,7 @@
 /*
 ** Includes
 */
-
+#include "pl_sim_lib_eds_typedefs.h"
 
 /***********************/
 /** Macro Definitions **/
@@ -69,16 +69,6 @@
 /**********************/
 /** Type Definitions **/
 /**********************/
-
-typedef enum 
-{
-   
-   PL_SIM_LIB_POWER_OFF    = 1,
-   PL_SIM_LIB_POWER_INIT   = 2,
-   PL_SIM_LIB_POWER_RESET  = 3,
-   PL_SIM_LIB_POWER_READY  = 4
-   
-} PL_SIM_LIB_Power_t;
 
 
 typedef struct
@@ -109,7 +99,7 @@ typedef struct
 typedef struct
 {
 
-   PL_SIM_LIB_Power_t Power;
+   PL_SIM_LIB_Power_Enum_t Power;
    uint16  PowerInitCycleCnt;
    uint16  PowerResetCycleCnt;
    uint16  DetectorReadoutRow; 
@@ -185,7 +175,7 @@ void PL_SIM_LIB_ExecuteStep(void);
 **  1. In a non-simulated environment this would not exist.
 **
 */
-const char* PL_SIM_LIB_GetPowerStateStr(PL_SIM_LIB_Power_t Power);
+const char* PL_SIM_LIB_GetPowerStateStr(PL_SIM_LIB_Power_Enum_t Power);
 
 
 /******************************************************************************
@@ -248,7 +238,7 @@ void PL_SIM_LIB_ReadState(PL_SIM_LIB_Class_t *PlSimObj);
 **     interface.
 **
 */
-PL_SIM_LIB_Power_t PL_SIM_LIB_ReadPowerState(void);
+PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void);
 
 
 /******************************************************************************
@@ -311,7 +301,7 @@ void PL_SIM_LIB_ReadState(PL_SIM_LIB_Class_t *PlSimObj);
 **     interface.
 **
 */
-PL_SIM_LIB_Power_t PL_SIM_LIB_ReadPowerState(void);
+PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void);
 
 
 #endif /* _pl_sim_lib_ */

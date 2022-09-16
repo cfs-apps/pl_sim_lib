@@ -35,9 +35,9 @@
 ** Includes
 */
 
-#include "cfe.h"
-#include "pl_sim_lib_platform_cfg.h"
+#include "pl_sim_lib_eds_typedefs.h"
 #include "osk_c_fw.h"
+#include "pl_sim_lib_platform_cfg.h"
 
 /******************************************************************************
 ** PL_SIM Application Macros

@@ -56,8 +56,8 @@ typedef enum
 
 typedef struct
 {
-   bool               Received;
-   PL_SIM_LIB_Power_t NewState;
+   bool                    Received;
+   PL_SIM_LIB_Power_Enum_t NewState;
      
 } PowerConfigCmd_t;
 
@@ -141,7 +141,7 @@ bool PL_SIM_LIB_Constructor(PL_SIM_LIB_Class_t* PlSimLibPtr)
    CFE_PSP_MemSet((void*)PlSimLib, 0, sizeof(PL_SIM_LIB_Class_t));
    CFE_PSP_MemSet((void*)&PowerConfigCmd, 0, sizeof(PowerConfigCmd_t));
    
-   PlSimLib->State.Power = PL_SIM_LIB_POWER_OFF;
+   PlSimLib->State.Power = PL_SIM_LIB_Power_OFF;
    
    Detector_Init(true);
 
@@ -203,7 +203,7 @@ void PL_SIM_LIB_ExecuteStep(void)
       PlSimLib->State.Power = PowerConfigCmd.NewState;
       PlSimLib->State.PowerInitCycleCnt  = 0;
       PlSimLib->State.PowerResetCycleCnt = 0;
-      if (PlSimLib->State.Power == PL_SIM_LIB_POWER_RESET)
+      if (PlSimLib->State.Power == PL_SIM_LIB_Power_RESET)
       {
          Detector_Init(false);
       }
@@ -218,15 +218,15 @@ void PL_SIM_LIB_ExecuteStep(void)
    switch (PlSimLib->State.Power) 
    {
    
-      case PL_SIM_LIB_POWER_OFF:
+      case PL_SIM_LIB_Power_OFF:
          break;
    
-      case PL_SIM_LIB_POWER_INIT:
+      case PL_SIM_LIB_Power_INIT:
       
          if (++PlSimLib->State.PowerInitCycleCnt >= PlSimLib->Config.PowerInitCycleLim) 
          {
             
-            PlSimLib->State.Power = PL_SIM_LIB_POWER_READY;
+            PlSimLib->State.Power = PL_SIM_LIB_Power_READY;
             
             CFE_EVS_SendEvent (PL_SIM_LIB_PWR_INIT_COMPLETE_EID, CFE_EVS_EventType_INFORMATION,
                                "PL_SIM completed initialization after power on in %d cycles.",
@@ -238,7 +238,7 @@ void PL_SIM_LIB_ExecuteStep(void)
          break;
          
          
-      case PL_SIM_LIB_POWER_RESET:
+      case PL_SIM_LIB_Power_RESET:
                  
          if (++PlSimLib->State.PowerResetCycleCnt >= PlSimLib->Config.PowerResetCycleLim) 
          {
@@ -247,13 +247,13 @@ void PL_SIM_LIB_ExecuteStep(void)
                                "PL_SIM completed initialization after reset in %d cycles.",
                                PlSimLib->State.PowerResetCycleCnt);
 
-            PlSimLib->State.Power = PL_SIM_LIB_POWER_READY;
+            PlSimLib->State.Power = PL_SIM_LIB_Power_READY;
             PlSimLib->State.PowerResetCycleCnt  = 0;
             PlSimLib->State.DetectorFaultPresent = false;
          
          } /* End if init cycle complete */
 
-      case PL_SIM_LIB_POWER_READY:
+      case PL_SIM_LIB_Power_READY:
          break;
                   
       default:
@@ -262,7 +262,7 @@ void PL_SIM_LIB_ExecuteStep(void)
                             "Invalid PL_SIM power state %d. Powering off instrument.",
                             PlSimLib->State.Power);
          
-         PlSimLib->State.Power = PL_SIM_LIB_POWER_OFF;
+         PlSimLib->State.Power = PL_SIM_LIB_Power_OFF;
          PlSimLib->State.PowerInitCycleCnt  = 0;
          PlSimLib->State.PowerResetCycleCnt = 0;
          Detector_Init(true);
@@ -282,11 +282,11 @@ void PL_SIM_LIB_ExecuteStep(void)
 **  1. In a non-simulated environment this would not exist.
 **
 */
-const char* PL_SIM_LIB_GetPowerStateStr(PL_SIM_LIB_Power_t PowerState)
+const char* PL_SIM_LIB_GetPowerStateStr(PL_SIM_LIB_Power_Enum_t PowerState)
 {
    uint8 i = 0;
    
-   if (PowerState <= PL_SIM_LIB_POWER_READY)
+   if (PowerState <= PL_SIM_LIB_Power_READY)
    {
       i = PowerState;
    }
@@ -309,7 +309,7 @@ void PL_SIM_LIB_PowerOff(void)
 {
 
    PowerConfigCmd.Received = true;
-   PowerConfigCmd.NewState = PL_SIM_LIB_POWER_OFF;
+   PowerConfigCmd.NewState = PL_SIM_LIB_Power_OFF;
    
 } /* End PL_SIM_LIB_PowerOff() */
 
@@ -328,7 +328,7 @@ void PL_SIM_LIB_PowerOn(void)
 {
 
    PowerConfigCmd.Received = true;
-   PowerConfigCmd.NewState = PL_SIM_LIB_POWER_INIT;
+   PowerConfigCmd.NewState = PL_SIM_LIB_Power_INIT;
  
 } /* End PL_SIM_LIB_PowerOn() */
 
@@ -347,7 +347,7 @@ void PL_SIM_LIB_PowerReset(void)
 {
 
    PowerConfigCmd.Received = true;
-   PowerConfigCmd.NewState = PL_SIM_LIB_POWER_RESET;
+   PowerConfigCmd.NewState = PL_SIM_LIB_Power_RESET;
    
 } /* End PL_SIM_LIB_PowerReset() */
 
@@ -383,7 +383,7 @@ void PL_SIM_LIB_ReadDetector(PL_SIM_LIB_Detector_t *Detector)
 **     interface.
 **
 */
-PL_SIM_LIB_Power_t PL_SIM_LIB_ReadPowerState(void)
+PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void)
 {
    
    return PlSimLib->State.Power;
