@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2022 bitValence, Inc.
+    All Rights Reserved.
+
+    This program is free software; you can modify and/or redistribute it
+    under the terms of the GNU Affero General Public License
+    as published by the Free Software Foundation; version 3 with
+    attribution addendums as found in the LICENSE.txt.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+      
+    Purpose: 
+      This defines the interface objects for the Payload Simulator
+      Library. 
+      
+    Notes:
+      1. This document adheres to the Electronic Data Sheet (EDS) XML schema 
+         as prescribed in CCSDS book 876.0. 
+      
+-->
+<PackageFile xmlns="http://www.ccsds.org/schema/sois/seds">
+  <Package name="PL_SIM_LIB" shortDescription="Payload Simulator Library">
+
+    <DataTypeSet>
+ 
+      <!--***********************************-->
+      <!--**** DataTypeSet:  Entry Types ****-->
+      <!--***********************************-->
+
+      <!-- General -->
+
+      <EnumeratedDataType name="Power" shortDescription="Define simulated payload power states" >
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+        <EnumerationList>
+          <Enumeration label="OFF"   value="1" shortDescription="" />
+          <Enumeration label="INIT"  value="2" shortDescription="" />
+          <Enumeration label="RESET" value="3" shortDescription="" />
+          <Enumeration label="READY" value="4" shortDescription="" />
+        </EnumerationList>
+      </EnumeratedDataType>
+   
+    </DataTypeSet>    
+  </Package>
+</PackageFile>
