@@ -13,7 +13,7 @@
 **  GNU Affero General Public License for more details.
 **
 **  Purpose:
-**    Entry point function for OSK app framework library
+**    Entry point function for Payload Simulator Library
 **
 **  Notes:
 **    None

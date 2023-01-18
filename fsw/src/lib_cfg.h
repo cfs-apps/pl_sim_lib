@@ -36,7 +36,7 @@
 */
 
 #include "pl_sim_lib_eds_typedefs.h"
-#include "osk_c_fw.h"
+#include "app_c_fw.h"
 #include "pl_sim_lib_platform_cfg.h"
 
 /******************************************************************************
@@ -46,7 +46,7 @@
 /*
 ** Versions:
 **
-** 1.0 - Initial release based on OSK Instrument Simulator(ISIM)
+** 1.0 - Initial release based on OpenSatKit Instrument Simulator(ISIM)
 */
 
 #define  PL_SIM_LIB_MAJOR_VER   0
