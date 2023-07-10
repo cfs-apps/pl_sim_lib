@@ -29,6 +29,8 @@
 **          - PL_SIM_LIB_PowerOff()
 **          - PL_SIM_LIB_PowerReset()
 **       C. Model payload data interface
+**          - PL_SIM_LIB_DetectorOn()
+**          - PL_SIM_LIB_DetectorOff()
 **          - PL_SIM_LIB_ReadState()
 **    2. This header can't include lib_cfg.h because it would
 **       cause an initbl CFG definition conflict with apps that
@@ -60,11 +62,12 @@
 ** Event Message IDs
 */
 
-#define PL_SIM_LIB_PWR_INIT_COMPLETE_EID   (APP_C_FW_LIB_BASE_EID + 0)
-#define PL_SIM_LIB_PWR_RESET_COMPLETE_EID  (APP_C_FW_LIB_BASE_EID + 1)
-#define PL_SIM_LIB_PWR_INVALID_STATE_EID   (APP_C_FW_LIB_BASE_EID + 2)
-#define PL_SIM_LIB_PWR_TRANSITION_EID      (APP_C_FW_LIB_BASE_EID + 3)
-#define PL_SIM_LIB_DETECTOR_ERR_EID        (APP_C_FW_LIB_BASE_EID + 4)
+#define PL_SIM_LIB_POWER_INIT_COMPLETE_EID  (APP_C_FW_LIB_BASE_EID + 0)
+#define PL_SIM_LIB_POWER_INVALID_STATE_EID  (APP_C_FW_LIB_BASE_EID + 1)
+#define PL_SIM_LIB_POWER_TRANSITION_EID     (APP_C_FW_LIB_BASE_EID + 2)
+#define PL_SIM_LIB_DETECTOR_RESET_CMD_EID   (APP_C_FW_LIB_BASE_EID + 3)
+#define PL_SIM_LIB_DETECTOR_RESET_EID       (APP_C_FW_LIB_BASE_EID + 4)
+#define PL_SIM_LIB_DETECTOR_SIM_ERR_EID     (APP_C_FW_LIB_BASE_EID + 5)
 
 /**********************/
 /** Type Definitions **/
@@ -92,7 +95,7 @@ typedef struct
 {
 
    uint16   PowerInitCycleLim;
-   uint16   PowerResetCycleLim;
+   uint16   DetectorResetCycleLim;
 
 } PL_SIM_LIB_Config_t;
 
@@ -101,7 +104,9 @@ typedef struct
 
    PL_SIM_LIB_Power_Enum_t Power;
    uint16  PowerInitCycleCnt;
-   uint16  PowerResetCycleCnt;
+   uint16  DetectorResetCycleCnt;
+   
+   PL_SIM_LIB_Detector_Enum_t Detector;
    uint16  DetectorReadoutRow; 
    bool    DetectorFaultPresent;
 
@@ -153,6 +158,44 @@ bool PL_SIM_LIB_Constructor(PL_SIM_LIB_Class_t *PlSimPtr);
 **
 */
 void PL_SIM_LIB_ClearFault(void);
+
+
+/******************************************************************************
+** Functions: PL_SIM_LIB_DetectorOff
+**
+** Turn off the detector
+**
+** Notes:
+**   1. This does not affect the power state.
+**
+*/
+void PL_SIM_LIB_DetectorOff(void);
+
+
+/******************************************************************************
+** Functions: PL_SIM_LIB_DetectorOn
+**
+** Turn on the detector
+**
+** Notes:
+**   1. This does not affect the power state.
+**
+*/
+void PL_SIM_LIB_DetectorOn(void);
+
+
+/******************************************************************************
+** Functions: PL_SIM_LIB_DetectorReset
+**
+** Reset detector electronics
+**
+** Notes:
+**   1. Reset clears simulated faults and allows some system state to persist
+**      across the reset. 
+**   2. No return status required, power is always set to true.
+**
+*/
+void PL_SIM_LIB_DetectorReset(void);
 
 
 /******************************************************************************
@@ -213,7 +256,20 @@ void PL_SIM_LIB_PowerOn(void);
 **     interface.
 **
 */
-void PL_SIM_LIB_ReadDetector(PL_SIM_LIB_Detector_t *Detector);
+bool PL_SIM_LIB_ReadDetector(PL_SIM_LIB_Detector_t *Detector);
+
+
+/******************************************************************************
+** Functions: PL_SIM_LIB_ReadPowerState
+**
+** Read the current power state of the payload
+**
+** Notes:
+**  1. In a non-simulated environment this would be read across a hardware
+**     interface.
+**
+*/
+PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void);
 
 
 /******************************************************************************
@@ -229,32 +285,6 @@ void PL_SIM_LIB_ReadState(PL_SIM_LIB_Class_t *PlSimObj);
 
 
 /******************************************************************************
-** Functions: PL_SIM_LIB_ReadPowerState
-**
-** Read the current power state of the payload
-**
-** Notes:
-**  1. In a non-simulated environment this would be read across a hardware
-**     interface.
-**
-*/
-PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void);
-
-
-/******************************************************************************
-** Functions: PL_SIM_LIB_PowerReset
-**
-** Reset power on the simulated payload
-**
-** Notes:
-**   1. Reset allows some system state to persist across the reset. 
-**   2. No return status required, power is always set to true.
-**
-*/
-void PL_SIM_LIB_PowerReset(void);
-
-
-/******************************************************************************
 ** Functions: PL_SIM_LIB_SetFault
 **
 ** Set/clear fault state.
@@ -264,44 +294,6 @@ void PL_SIM_LIB_PowerReset(void);
 **
 */
 void PL_SIM_LIB_SetFault(void);
-
-
-/******************************************************************************
-** Functions: PL_SIM_LIB_ReadDetector
-**
-** Read the detector data and state information
-**
-** Notes:
-**  1. In a non-simulated environment this would be read across a hardware
-**     interface.
-**
-*/
-void PL_SIM_LIB_ReadDetector(PL_SIM_LIB_Detector_t *Detector);
-
-
-/******************************************************************************
-** Functions: PL_SIM_LIB_ReadState
-**
-** Read the state of the library simulation
-**
-** Notes:
-**  1. In a non-simulated environment this would not exist.
-**
-*/
-void PL_SIM_LIB_ReadState(PL_SIM_LIB_Class_t *PlSimObj);
-
-
-/******************************************************************************
-** Functions: PL_SIM_LIB_ReadPowerState
-**
-** Read the current power state of the payload
-**
-** Notes:
-**  1. In a non-simulated environment this would be read across a hardware
-**     interface.
-**
-*/
-PL_SIM_LIB_Power_Enum_t PL_SIM_LIB_ReadPowerState(void);
 
 
 #endif /* _pl_sim_lib_ */

@@ -49,8 +49,8 @@
 ** 1.0 - Initial release based on OpenSatKit Instrument Simulator(ISIM)
 */
 
-#define  PL_SIM_LIB_MAJOR_VER   0
-#define  PL_SIM_LIB_MINOR_VER   9
+#define  PL_SIM_LIB_MAJOR_VER   1
+#define  PL_SIM_LIB_MINOR_VER   0
 
 
 /******************************************************************************
@@ -58,12 +58,12 @@
 **    
 */
 
-#define CFG_PWR_INIT_CYCLES    PWR_INIT_CYCLES
-#define CFG_PWR_RESET_CYCLES   PWR_RESET_CYCLES
+#define CFG_POWER_INIT_CYCLES      POWER_INIT_CYCLES
+#define CFG_DETECTOR_RESET_CYCLES  DETECTOR_RESET_CYCLES
 
 #define LIB_CONFIG(XX) \
-   XX(PWR_INIT_CYCLES,uint32) \
-   XX(PWR_RESET_CYCLES,uint32) \
+   XX(POWER_INIT_CYCLES,uint32) \
+   XX(DETECTOR_RESET_CYCLES,uint32) \
 
 DECLARE_ENUM(Config,LIB_CONFIG)
 

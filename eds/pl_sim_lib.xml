@@ -39,8 +39,16 @@
         <EnumerationList>
           <Enumeration label="OFF"   value="1" shortDescription="" />
           <Enumeration label="INIT"  value="2" shortDescription="" />
-          <Enumeration label="RESET" value="3" shortDescription="" />
           <Enumeration label="READY" value="4" shortDescription="" />
+        </EnumerationList>
+      </EnumeratedDataType>
+   
+      <EnumeratedDataType name="Detector" shortDescription="Define simulated detector states" >
+        <IntegerDataEncoding sizeInBits="8" encoding="unsigned" />
+        <EnumerationList>
+          <Enumeration label="OFF"   value="1" shortDescription="" />
+          <Enumeration label="ON"    value="2" shortDescription="" />
+          <Enumeration label="RESET" value="3" shortDescription="" />
         </EnumerationList>
       </EnumeratedDataType>
    
