@@ -16,11 +16,11 @@
 **    Define configurations for the Payload Simulator Library
 **
 **  Notes:
-**    1. These macros can only be built with the application and can't
+**    1. These macros can only be built with the library and can't
 **       have a platform scope because the same file name is used for
-**       all applications following the object-based application design.
+**       all libs/apps following the object-based application design.
 **    2. This must be named lib_cfg.h and not app_cfg.h because apps
-**       need to add the library soucre directory to their include
+**       need to add the library sourre directory to their include
 **       search path and they'd get a conflict with app_cfg.h.
 **
 **  References:

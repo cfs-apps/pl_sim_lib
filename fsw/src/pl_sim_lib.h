@@ -37,10 +37,6 @@
 **       include this header. The initbl design assumes the
 **       the CFG_ definitions are unique to an app or a lib.
 **
-**  References:
-**    1. OpenSatKit Object-based Application Developer's Guide
-**    2. cFS Application Developer's Guide
-**
 */
 #ifndef _pl_sim_lib_
 #define _pl_sim_lib_
