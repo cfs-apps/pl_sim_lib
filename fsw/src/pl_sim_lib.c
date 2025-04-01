@@ -117,7 +117,7 @@ static const char DetectorRowInitState[PL_SIM_LIB_DETECTOR_ROW_LEN] =
 ** detected by the payload manager app.  
 */
 static const char FaultCorruptedChar[PL_SIM_LIB_DETECTOR_ROWS_PER_IMAGE] = 
-   { 70, 65, 85, 76, 84, 65, 76, 69, 82, 84 };
+   { 71, 64, 86, 75, 85, 64, 77, 68, 83, 83 };
 
 
 /*******************************/
@@ -540,7 +540,10 @@ static DetectorReadout_Enum_t Detector_Readout(void)
          /* Corrupt first column of data when a fault is present */
          if (PlSimLib->State.DetectorFaultPresent)
          {
-            PlSimLib->Detector.Row.Data[0] = FaultCorruptedChar[PlSimLib->Detector.ReadoutRow];
+            if (PlSimLib->Detector.ReadoutRow%2 == 0)
+               PlSimLib->Detector.Row.Data[0] = FaultCorruptedChar[PlSimLib->Detector.ReadoutRow]-1;
+            else
+               PlSimLib->Detector.Row.Data[0] = FaultCorruptedChar[PlSimLib->Detector.ReadoutRow]+1;
          }
             
          PlSimLib->State.DetectorReadoutRow++;
