@@ -47,9 +47,10 @@
 ** Versions:
 **
 ** 1.0 - Initial release based on OpenSatKit Instrument Simulator(ISIM)
+** 2.0 - Compatible with Basecamp 4.0 and cFS 7.0
 */
 
-#define  PL_SIM_LIB_MAJOR_VER   1
+#define  PL_SIM_LIB_MAJOR_VER   2
 #define  PL_SIM_LIB_MINOR_VER   0
 
 
