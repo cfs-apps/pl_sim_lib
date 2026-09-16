@@ -1,6 +1,5 @@
-project(CFS_pl_sim_lib C)
+project(CFS_PL_SIM_LIB C)
 
-include_directories(fsw/src)
 include_directories(fsw/mission_inc)
 include_directories(fsw/platform_inc)
 include_directories(${app_c_fw_MISSION_DIR}/fsw/app_inc)
