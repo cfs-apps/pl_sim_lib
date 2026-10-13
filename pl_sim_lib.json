@@ -21,7 +21,7 @@
       "load_addr": 0,
       "exception-action": 0,
       "app-framework": "osk",
-      "tables": ["pl_sim_lib_ini.json"]
+      "json-tables": ["pl_sim_lib_ini.json"]
    },
    
    "requires": []   
